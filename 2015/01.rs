@@ -1,27 +1,26 @@
-use std::io::BufRead as _;
+use std::io::Read as _;
 
 fn main() {
     let mut sum = 0i16;
     let mut count = 0;
     let mut basement = None;
 
-    let lines = std::io::stdin()
+    let mut buffer = String::new();
+    std::io::stdin()
         .lock()
-        .lines()
-        .map(|l| l.expect("Cannot split line"));
+        .read_to_string(&mut buffer)
+        .expect("Unable to read from stdin");
 
-    for line in lines {
-        for c in line.split_whitespace().flat_map(|s| s.chars()) {
-            count += 1;
-            match c {
-                '(' => sum += 1,
-                ')' => sum -= 1,
-                u => panic!("Unexpected character: {}", u),
-            }
+    for c in buffer.split_whitespace().flat_map(|s| s.chars()) {
+        count += 1;
+        match c {
+            '(' => sum += 1,
+            ')' => sum -= 1,
+            u => panic!("Unexpected character: {}", u),
+        }
 
-            if sum == -1 && basement.is_none(){
-                basement = Some(count);
-            }
+        if sum == -1 && basement.is_none(){
+            basement = Some(count);
         }
     }
 
