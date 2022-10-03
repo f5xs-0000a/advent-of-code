@@ -8,53 +8,43 @@ fn main() {
         .read_to_string(&mut buffer)
         .expect("Unable to read from stdin");
 
-    let mut passed = HashSet::new();
-    let mut coords = (0, 0);
+    let mut single_passed = HashSet::new();
+    let mut single_coords = (0, 0);
 
-    passed.insert(coords.clone());
-    for c in buffer.split_whitespace().flat_map(|s| s.chars()) {
-        match c {
-            '^' => coords.1 += 1,
-            '<' => coords.0 -= 1,
-            '>' => coords.0 += 1,
-            'v' => coords.1 -= 1,
-            u => panic!("Unexpected character: {}", u),
-        }
-
-        passed.insert(coords.clone());
-    }
-
-    eprintln!("Day 2.1: {}", passed.len());
-
-    passed.clear();
-    coords = (0, 0);
+    let mut dual_passed = HashSet::new();
+    let mut half_coords = (0, 0);
     let mut robo_coords = (0, 0);
 
-    passed.insert(coords.clone());
+    single_passed.insert(single_coords.clone());
+    dual_passed.insert(half_coords.clone());
     for (p, c) in buffer.split_whitespace().flat_map(|s| s.chars()).enumerate()
     {
-        let parity = p % 2;
+        let (dx, dy) = match c {
+            '^' => (0, 1),
+            '<' => (-1, 0),
+            '>' => (1, 0),
+            'v' => (0, -1),
+            u => panic!("Unexpected character: {}", u),
+        };
 
-        match (parity, c) {
-            (0, '^') => coords.1 += 1,
-            (0, '<') => coords.0 -= 1,
-            (0, '>') => coords.0 += 1,
-            (0, 'v') => coords.1 -= 1,
-            (1, '^') => robo_coords.1 += 1,
-            (1, '<') => robo_coords.0 -= 1,
-            (1, '>') => robo_coords.0 += 1,
-            (1, 'v') => robo_coords.1 -= 1,
-            (_, u) => panic!("Unexpected character: {}", u),
-        }
+        single_coords.0 += dx;
+        single_coords.1 += dy;
 
-        if parity == 0 {
-            passed.insert(coords.clone());
+        single_passed.insert(single_coords.clone());
+
+        if p % 2 == 0 {
+            half_coords.0 += dx;
+            half_coords.1 += dy;
+            dual_passed.insert(half_coords.clone());
         }
 
         else {
-            passed.insert(robo_coords.clone());
+            robo_coords.0 += dx;
+            robo_coords.1 += dy;
+            dual_passed.insert(robo_coords.clone());
         }
     }
 
-    eprintln!("Day 2.1: {}", passed.len());
+    eprintln!("Day 2.1: {}", single_passed.len());
+    eprintln!("Day 2.2: {}", dual_passed.len());
 }
