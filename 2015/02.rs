@@ -27,8 +27,6 @@ fn main() {
         ribbon += 2 * (l + w + h - ribbon_highest) + l * w * h;
     }
 
-    dbg!(wrapper);
-    dbg!(ribbon);
     eprintln!("Day 2.1: {}", wrapper);
     eprintln!("Day 2.2: {}", ribbon);
 }
