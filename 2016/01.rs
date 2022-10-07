@@ -21,14 +21,14 @@ impl Direction {
         use Direction::*;
 
         match (self, d) {
-            (North, Left) => East,
-            (East, Left) => South,
-            (South, Left) => West,
-            (West, Left) => North,
-            (North, Right) => West,
-            (East, Right) => North,
-            (South, Right) => East,
-            (West, Right) => South,
+            (North, Left) => West,
+            (East, Left) => North,
+            (South, Left) => East,
+            (West, Left) => South,
+            (North, Right) => East,
+            (East, Right) => South,
+            (South, Right) => West,
+            (West, Right) => North,
         }
     }
 
