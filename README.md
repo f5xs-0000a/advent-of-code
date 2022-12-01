@@ -48,7 +48,7 @@ Such solutions for puzzles will be marked with a `*` in the progress table. They
 | 22  |                          |                      |                      |                      |                       |                      |                      |                      |
 | 23  |                          |                      |                      |                      |                       |                      |                      |                      |
 | 24  |                          |                      |                      |                      |                       |                      |                      |                      |
-| 25  | [DONE](./2015/25.rs)     |                      |                      |                      |                       |                      |                      |                      |
+| 25  | [DONE](./2015/25.rs)     |                      |                      |                      |                       | [DONE](./2020/25.rs) |                      |                      |
 
 ## Other Notes
 
