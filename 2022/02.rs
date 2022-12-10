@@ -28,7 +28,6 @@ impl RPS {
         }
     }
 
-
     fn cook(&self, win: Option<bool>) -> RPS {
         let addend = match win {
             None => 0,
