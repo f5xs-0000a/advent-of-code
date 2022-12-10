@@ -33,7 +33,7 @@ Such solutions for puzzles will be marked with a `*` in the progress table. They
 |  7  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/07.rs) |
 |  8  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/08.rs) |
 |  9  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/09.rs) |
-| 10  |                          |                      |                      |                      |                       |                      |                      |                      |
+| 10  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/10.rs) |
 | 11  |                          |                      |                      |                      |                       |                      |                      |                      |
 | 12  |                          | [DONE](./2016/12.rs) |                      |                      |                       |                      |                      |                      |
 | 13  |                          |                      |                      |                      |                       |                      |                      |                      |
