@@ -67,11 +67,13 @@ impl Monkey {
     fn handle_items_and_throw(
         &mut self,
         new_inventories: &mut [Vec<usize>],
+        divisor: usize,
+        clock: usize,
     ) {
         self.inspections += self.items.len();
 
         for item in self.items.drain(..) {
-            let new_worry = self.operation.evaluate(item) / 3;
+            let new_worry = (self.operation.evaluate(item) / divisor) % clock;
 
             if new_worry % self.divisibility_test == 0 {
                 new_inventories[self.true_test].push(new_worry);
@@ -84,25 +86,60 @@ impl Monkey {
     }
 }
 
+fn euclidean_algorithm(mut a: usize, mut b: usize) -> usize {
+    while b != 0 {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+
+    a
+}
+
+fn euclidean_algorithm_multiple(mut values: impl Iterator<Item = usize>)
+-> Option<usize> {
+    let mut gcd = match values.next() {
+        Some(x) => x,
+        None => return None,
+    };
+
+    for value in values {
+        gcd = euclidean_algorithm(gcd, value);
+    }
+
+    Some(gcd)
+}
+
+fn least_common_multiple(values: impl Iterator<Item = usize>) -> Option<usize>{
+    let mut multiple = 1;
+    let values = values.inspect(|x| multiple *= x);
+    euclidean_algorithm_multiple(values).map(|gcd| multiple / gcd)
+}
+
 fn do_monkey_business_with_buffer(
     monkeys: &mut [Monkey],
     buffer: &mut [Vec<usize>],
     rounds: usize,
+    divisor: usize,
 ) {
-    for round in 0 .. rounds {
+    let clock = least_common_multiple(
+        monkeys.iter().map(|m| m.divisibility_test)
+    ).unwrap();
+
+    for _ in 0 .. rounds {
         // do the monkey business
         for (i, monkey) in monkeys.iter_mut().enumerate() {
             // extend the inventory of the monkey with the contents of the
             // buffer
             monkey.items.extend(buffer[i].drain(..));
-            monkey.handle_items_and_throw(buffer);
+            monkey.handle_items_and_throw(buffer, divisor, clock);
         }
     }
 }
 
-fn do_monkey_business(monkeys: &mut [Monkey], rounds: usize) {
+fn do_monkey_business(monkeys: &mut [Monkey], rounds: usize, divisor: usize) {
     let mut buffer = vec![vec![]; monkeys.len()];
-    do_monkey_business_with_buffer(monkeys, &mut buffer, rounds);
+    do_monkey_business_with_buffer(monkeys, &mut buffer, rounds, divisor);
 }
 
 /*
@@ -206,9 +243,9 @@ fn main() {
             3,
         ),
     ];
-
+    
     let mut first_pass_monkeys = monkeys.clone();
-    do_monkey_business(&mut *first_pass_monkeys, 20);
+    do_monkey_business(&mut *first_pass_monkeys, 20, 3);
 
     let mut inspections = monkeys
         .iter()
@@ -217,7 +254,7 @@ fn main() {
     inspections.sort_unstable();
     dbg!(inspections.iter().rev().take(2).product::<usize>());
 
-    do_monkey_business(&mut *monkeys, 10000);
+    do_monkey_business(&mut *monkeys, 10000, 1);
 
     let mut inspections = monkeys
         .iter()
