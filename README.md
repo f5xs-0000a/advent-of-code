@@ -30,7 +30,7 @@ Such solutions for puzzles will be marked with a `*` in the progress table. They
 |  4  | [DONE](./2015/04.rs)\*\* |                      |                      |                      |                       |                      | [DONE](./2021/04.rs) | [DONE](./2022/04.rs) |
 |  5  | [DONE](./2015/05.rs)     |                      |                      |                      | [DONE](./2019/05.rs)  |                      |                      | [DONE](./2022/05.rs) |
 |  6  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/06.rs) |
-|  7  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/07.rs) |
+|  7  | [DONE](./2015/07.rs)     |                      |                      |                      |                       |                      |                      | [DONE](./2022/07.rs) |
 |  8  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/08.rs) |
 |  9  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/09.rs) |
 | 10  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/10.rs) |
