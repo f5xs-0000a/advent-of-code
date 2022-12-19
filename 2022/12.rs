@@ -85,15 +85,30 @@ fn main() {
     let start = start.unwrap();
     let end = end.unwrap();
 
-    dbg!(find_shortest_distance_length_from_start_to_finish(&relief_map, start, end));
+    let p1 = find_shortest_distance(
+        &relief_map,
+        start,
+        |from_h, to_h| to_h <= from_h + 1,
+        |x, y, _| end == (x, y),
+    );
 
+    eprintln!("Day 12.1: {}", p1);
 
+    let p2 = find_shortest_distance(
+        &relief_map,
+        end,
+        |from_h, to_h| from_h <= to_h + 1,
+        |_, _, h| h == 0,
+    );
+
+    eprintln!("Day 12.2: {}", p2);
 }
 
-fn find_shortest_distance_length_from_start_to_finish(
+fn find_shortest_distance(
     relief_map: &[Vec<u8>],
     start: (usize, usize),
-    end: (usize, usize)
+    transition_rule: impl Fn(u8, u8) -> bool,
+    end_condition: impl Fn(usize, usize, u8) -> bool,
 ) -> usize {
     // maybe this should be a set
     let mut traversed = HashMap::new();
@@ -126,7 +141,10 @@ fn find_shortest_distance_length_from_start_to_finish(
 
                     // check target coords if it can be traversed from current
                     // coords
-                    if relief_map[coords.0][coords.1] + 1 < relief_map[target_coords.0][target_coords.1] {
+                    if !transition_rule(
+                        relief_map[coords.0][coords.1],
+                        relief_map[target_coords.0][target_coords.1],
+                    ) {
                         continue;
                     }
 
@@ -164,7 +182,7 @@ fn find_shortest_distance_length_from_start_to_finish(
 
         // clear next breadth and put them into current breadth and traversed
         for (k, v) in next_breadth.drain() {
-            if k == end {
+            if end_condition(k.0, k.1, relief_map[k.0][k.1]) {
                 return v;
             }
 
