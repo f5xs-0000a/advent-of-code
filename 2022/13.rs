@@ -1,7 +1,6 @@
 use std::iter::Peekable;
 use std::cmp::Ordering;
 use std::io::BufRead as _;
-use std::io::Write as _;
 
 #[derive(Clone, PartialOrd, Eq)]
 enum ValueOrList {
@@ -10,26 +9,6 @@ enum ValueOrList {
 }
 
 impl ValueOrList {
-    fn print(&self, writer: &mut impl std::io::Write) -> Result<(), std::io::Error> {
-        use ValueOrList::*;
-
-        match self {
-            Value(x) => write!(writer, "{}", x)?,
-            List(x) => {
-                write!(writer, "[")?;
-                for (idx, i) in x.iter().enumerate() {
-                    if idx > 0 {
-                        write!(writer, ",")?;
-                    }
-                    i.print(writer)?;
-                }
-                write!(writer, "]")?;
-            }
-        }
-
-        Ok(())
-    }
-
     fn parse(char_iter: &mut Peekable<impl Iterator<Item = char>>)
     -> Result<ValueOrList, ()> {
         // this is only an opening parse, not yet a confirmation parse
@@ -111,6 +90,16 @@ impl PartialEq for ValueOrList {
     }
 }
 
+/*
+fn mergesort<T>(vec: Vec<T>) -> Vec<T>
+where T: Ord {
+    let mut target = 
+}
+
+fn mergesort_inner() {
+}
+*/
+
 fn main() {
     let mut signals = vec![];
 
@@ -137,22 +126,22 @@ fn main() {
         .map(|(idx, _)| idx + 1)
         .sum::<usize>();
 
-    dbg!(correct_order);
+    eprintln!("Day 13.2: {}", correct_order);
 
-    let divider_1 = ValueOrList::parse(&mut "[[2]]".chars().peekable()).unwrap();
-    let divider_2 = ValueOrList::parse(&mut "[[6]]".chars().peekable()).unwrap();
-    signals.push(divider_1.clone());
-    signals.push(divider_2.clone());
-    signals.sort_unstable();
+    let divider_1 = ValueOrList::parse(&mut "[[2]]".chars().peekable())
+        .unwrap();
+    let divider_2 = ValueOrList::parse(&mut "[[6]]".chars().peekable())
+        .unwrap();
 
-    let idx1 = signals.binary_search(&divider_1).unwrap();
-    let idx2 = signals.binary_search(&divider_1).unwrap();
+    let under_1 = signals.iter()
+        .filter(|s| divider_1.cmp(s).is_ge())
+        .count();
+    let under_2 = signals.iter()
+        .filter(|s| divider_2.cmp(s).is_ge())
+        .count();
 
-    let mut stdout = std::io::stdout().lock();
-    for signal in signals.iter() {
-        signal.print(&mut stdout);
-        writeln!(stdout, "");
-    }
+    let index_1 = under_1 + 1;
+    let index_2 = under_2 + 2;
 
-    dbg!((idx1 + 1) * (idx2 + 1));
+    eprintln!("Day 13.2: {}", index_1 * index_2);
 }
