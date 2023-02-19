@@ -28,7 +28,7 @@ Such solutions for puzzles will be marked with a `*` in the progress table. They
 |  2  | [DONE](./2015/02.rs)     |                      |                      |                      | [DONE](./2019/02.rs)  |                      | [DONE](./2021/02.rs) | [DONE](./2022/02.rs) |
 |  3  | [DONE](./2015/03.rs)     |                      |                      |                      |                       |                      | [DONE](./2021/03.rs) | [DONE](./2022/03.rs) |
 |  4  | [DONE](./2015/04.rs)\*\* |                      |                      |                      |                       |                      | [DONE](./2021/04.rs) | [DONE](./2022/04.rs) |
-|  5  | [DONE](./2015/05.rs)     |                      |                      |                      | [DONE](./2019/05.rs)  |                      |                      | [DONE](./2022/05.rs) |
+|  5  | [DONE](./2015/05.rs)     |                      |                      | [DONE](./2018/05.rs) | [DONE](./2019/05.rs)  |                      |                      | [DONE](./2022/05.rs) |
 |  6  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/06.rs) |
 |  7  | [DONE](./2015/07.rs)     |                      |                      |                      |                       |                      |                      | [DONE](./2022/07.rs) |
 |  8  |                          |                      |                      |                      |                       |                      |                      | [DONE](./2022/08.rs) |
